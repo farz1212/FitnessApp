@@ -8,10 +8,10 @@
 import SwiftUI
 
 @main
-struct FitnessAppApp: App {
+struct FitnessPro: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ItemTabView()
         }
     }
 }
