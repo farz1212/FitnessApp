@@ -14,8 +14,8 @@ struct HomeView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false){
-            VStack {
-                Text("Welcome")
+            VStack(alignment: .leading) {
+                Text("Fitness Pro")
                     .font(.largeTitle)
                     .padding()
                 
@@ -39,6 +39,22 @@ struct HomeView: View {
                     }
                 }
                 .padding()
+                
+                HStack(spacing: 20){
+                    Text("Fitness Activity")
+                        .font(.title2)
+                    Spacer()
+                    Button {
+                       print("")
+                    } label: {
+                        Text("Show more")
+                            .padding()
+                            .foregroundStyle(.white)
+                            .background(.blue)
+                            .cornerRadius(15)
+                    }
+                }
+                .padding(.horizontal)
             }
         }
     }
