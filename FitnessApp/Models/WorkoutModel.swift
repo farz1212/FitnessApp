@@ -6,3 +6,13 @@
 //
 
 import Foundation
+import SwiftUI
+
+struct WorkoutModel{
+    let id: Int
+    let title: String
+    let color: Color
+    let duration: String
+    let Calories: String
+    let image: String
+}

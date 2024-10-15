@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct Activty {
+struct ActivtyModel {
     let id: Int
     let title: String
     let subtitle: String

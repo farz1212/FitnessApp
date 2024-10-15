@@ -8,11 +8,49 @@
 import SwiftUI
 
 struct WorkoutCardView: View {
+    @State var workout: WorkoutModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color(uiColor: .systemGray4)
+            
+            HStack {
+                ZStack {
+                    Image(systemName: workout.image)
+                        .resizable()
+                        .scaledToFit()
+                        .padding()
+                    
+                    ProgressCircleView(
+                        goal: 100,
+                        color: workout.color,
+                        width: 5,
+                        progress: .constant(75)
+                    )
+                }
+                
+                Text(workout.title)
+                    .font(.title)
+                
+                Spacer()
+                
+                VStack(spacing: 15){
+                    Text(workout.duration)
+                    Text(workout.Calories)
+                }
+                .font(.headline)
+                
+            }
+            .padding()
+        }
+        .frame(width: .infinity , height: 100)
+        .cornerRadius(15)
     }
 }
 
 #Preview {
-    WorkoutCardView()
+    WorkoutCardView(
+        workout: WorkoutModel(id: 0, title: "Running", color: .red, duration: "43 Mins", Calories: "734 Kcal", image: "figure.run"
+        )
+    )
 }

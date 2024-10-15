@@ -8,11 +8,35 @@
 import SwiftUI
 
 struct ActivityCardView: View {
+    @State var activity: ActivtyModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color(uiColor: .systemGray6)
+                .cornerRadius(15)
+            
+            VStack{
+                HStack(alignment: .top){
+                    VStack(alignment: .leading, spacing: 7){
+                        Text(activity.title)
+                        
+                        Text(activity.subtitle)
+                            .font(.caption)
+                    }
+                    Spacer()
+                    Image(systemName: activity.image)
+                        .foregroundStyle(activity.tintColor)
+                }
+                Text(activity.amount)
+                    .font(.title)
+                    .bold()
+                    .padding()
+            }
+            .padding()
+        }
     }
 }
 
 #Preview {
-    ActivityCardView()
+    ActivityCardView(activity: ActivtyModel(id: 0, title: "Today Steps", subtitle: "Goal 15,000", image: "figure.walk", tintColor: .green, amount: "9,542"))
 }
