@@ -25,7 +25,7 @@ struct WorkoutCardView: View {
                         goal: 100,
                         color: workout.color,
                         width: 5,
-                        progress: .constant(75)
+                        progress: 75
                     )
                 }
                 
@@ -43,7 +43,7 @@ struct WorkoutCardView: View {
             }
             .padding()
         }
-        .frame(width: .infinity , height: 100)
+        .frame(width: .none , height: 100)
         .cornerRadius(15)
     }
 }

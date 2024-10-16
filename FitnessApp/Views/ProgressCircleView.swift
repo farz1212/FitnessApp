@@ -11,7 +11,7 @@ struct ProgressCircleView: View {
     var goal: Int
     var color: Color
     var width: CGFloat = 20
-    @Binding var progress: Double
+    var progress: Double
     
     var body: some View {
         ZStack {
@@ -28,5 +28,5 @@ struct ProgressCircleView: View {
 }
 
 #Preview {
-    ProgressCircleView(goal: 100, color: .red, progress: .constant(50))
+    ProgressCircleView(goal: 100, color: .red, progress: 50)
 }
