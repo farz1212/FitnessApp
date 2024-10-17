@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct ActivtyModel {
-    let id: Int
+struct ActivityModel {
     let title: String
     let subtitle: String
     let image: String

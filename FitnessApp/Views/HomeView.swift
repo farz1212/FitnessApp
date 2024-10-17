@@ -22,7 +22,7 @@ struct HomeView: View {
                         VStack {
                             TitleData(Title: "Calories", Data: "\(viewModel.calories)", textColor: .red)
                             
-                            TitleData(Title: "Active", Data: "\(viewModel.active)", textColor: .green)
+                            TitleData(Title: "Active", Data: "\(viewModel.exercise)", textColor: .green)
                             
                             TitleData(Title: "Stand", Data: "\(viewModel.stand)", textColor: .blue)
                         }
@@ -31,7 +31,7 @@ struct HomeView: View {
                         
                         ZStack{
                             ProgressCircleView(goal: 1500, color: .red, progress: viewModel.calories)
-                            ProgressCircleView(goal: 60, color: .green, progress: viewModel.active)
+                            ProgressCircleView(goal: 60, color: .green, progress: viewModel.exercise)
                                 .padding(.all, 20)
                             ProgressCircleView(goal: 12, color: .blue, progress: viewModel.stand)
                                 .padding(.all, 40)
@@ -50,7 +50,7 @@ struct HomeView: View {
                     }
                     
                     LazyVGrid(columns: Array(repeating: GridItem(spacing: 10), count: 2)){
-                        ForEach(viewModel.mocktivity, id: \.id){ activity in
+                        ForEach(viewModel.activities, id: \.title){ activity in
                             ActivityCardView(activity: activity)
                         }
                     }
@@ -66,7 +66,7 @@ struct HomeView: View {
                     }
                     
                     LazyVStack{
-                        ForEach(viewModel.mockWorkout, id: \.id){ workout in
+                        ForEach(viewModel.workouts, id: \.title){ workout in
                             WorkoutCardView(workout: workout)
                                 
                         }
@@ -74,7 +74,6 @@ struct HomeView: View {
                 }
             }
             .padding(20)
-            .ignoresSafeArea(edges: .bottom)
         }
     }
 }

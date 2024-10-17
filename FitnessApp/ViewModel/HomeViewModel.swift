@@ -10,45 +10,32 @@ import Foundation
 class HomeViewModel: ObservableObject {
     let healthManager = HealthManager.shared
     
-    @Published var calories: Double = 954.5
-    @Published var active: Double = 45
-    @Published var stand: Double = 10
+    @Published var calories: Int = 0
+    @Published var exercise: Int = 0
+    @Published var stand: Int = 0
+    @Published var activities: [ActivityModel] = []
+    @Published var workouts: [WorkoutModel] = []
     
     init() {
-        
-        healthManager.fetchCaloriesBurnedToday { result in
-            switch result {
-            case .success(let success):
-                print(success)
-            case .failure(let failure):
-                print(failure.localizedDescription)
+        Task{
+            do {
+                try await healthManager.requestHealthKitAccess()
+                fetchTodayBurnedCalories()
+                fetchTodayExerciseTime()
+                fetchTodayStandTime()
+                fetchActivities()
+                fetchWorkouts()
+            } catch {
+                print("Error requesting health kit access: \(error)")
             }
-            
-        }
-        healthManager.fetchStandTimeToday { result in
-            switch result {
-            case .success(let success):
-                print(success)
-            case .failure(let failure):
-                print(failure.localizedDescription)
-            }
-        }
-        healthManager.fetchExerciseTimeToday { result in
-            switch result {
-            case .success(let success):
-                print(success)
-            case .failure(let failure):
-                print(failure.localizedDescription)
-            }
-            
         }
     }
     
     @Published var mocktivity = [
-        ActivtyModel(id: 0, title: "Today Steps", subtitle: "Goal 15,000", image: "figure.walk", tintColor: .green, amount: "9,542"),
-        ActivtyModel(id: 1, title: "Today Steps", subtitle: "Goal 15,000", image: "figure.walk", tintColor: .blue, amount: "9,542"),
-        ActivtyModel(id: 2, title: "Today Steps", subtitle: "Goal 15,000", image: "figure.walk", tintColor: .yellow, amount: "9,542"),
-        ActivtyModel(id: 3, title: "Today Steps", subtitle: "Goal 15,000", image: "figure.walk", tintColor: .red, amount: "9,542"),
+        ActivityModel(title: "Steps", subtitle: "Goal 15,000", image: "figure.walk", tintColor: .green, amount: "9,542"),
+        ActivityModel(title: "Steps 1", subtitle: "Goal 15,000", image: "figure.walk", tintColor: .blue, amount: "9,542"),
+        ActivityModel(title: "Steps 2", subtitle: "Goal 15,000", image: "figure.walk", tintColor: .yellow, amount: "9,542"),
+        ActivityModel(title: "Steps 3", subtitle: "Goal 15,000", image: "figure.walk", tintColor: .red, amount: "9,542"),
     ]
     
     @Published var mockWorkout = [
@@ -61,4 +48,70 @@ class HomeViewModel: ObservableObject {
         WorkoutModel(id: 3, title: "Walking", color: .green,
                      duration: "40 mins", Calories: "130 Kcal" ,image: "figure.walk"),
     ]
+    
+    func fetchTodayBurnedCalories(){
+        healthManager.fetchCaloriesBurnedToday { result in
+            switch result {
+            case .success(let calories):
+                DispatchQueue.main.async {
+                    self.calories = Int(calories)
+                }
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
+    }
+    
+    func fetchTodayExerciseTime(){
+        healthManager.fetchExerciseTimeToday { result in
+            switch result {
+            case .success(let hours):
+                DispatchQueue.main.async {
+                    self.exercise = Int(hours)
+                }
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
+        
+    }
+    
+    func fetchTodayStandTime(){
+        healthManager.fetchStandTimeToday { result in
+            switch result {
+            case .success(let hours):
+                DispatchQueue.main.async {
+                    self.stand = Int(hours)
+                }
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
+    }
+    
+    func fetchActivities(){
+        healthManager.fetchWeeklyWorkouts { result in
+            switch result {
+            case .success(let workoutArray):
+                DispatchQueue.main.async {
+                    self.activities = workoutArray
+                }
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
+    }
+    
+    func fetchWorkouts(){
+        healthManager.fetchWorkoutsForMonth(month: Date()) { result in
+            switch result {
+            case .success(let workoutArray):
+                DispatchQueue.main.async {
+                    self.workouts = workoutArray
+                }
+            case .failure(let failure):
+                print(failure.localizedDescription)
+            }
+        }
+    }
 }

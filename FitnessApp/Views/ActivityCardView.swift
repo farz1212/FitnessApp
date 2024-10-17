@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ActivityCardView: View {
-    @State var activity: ActivtyModel
+    @State var activity: ActivityModel
     
     var body: some View {
         ZStack {
@@ -40,5 +40,5 @@ struct ActivityCardView: View {
 }
 
 #Preview {
-    ActivityCardView(activity: ActivtyModel(id: 0, title: "Today Steps", subtitle: "Goal 15,000", image: "figure.walk", tintColor: .green, amount: "9,542"))
+    ActivityCardView(activity: ActivityModel(title: "Today Steps", subtitle: "Goal 15,000", image: "figure.walk", tintColor: .green, amount: "9,542"))
 }

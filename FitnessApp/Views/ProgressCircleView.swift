@@ -11,7 +11,7 @@ struct ProgressCircleView: View {
     var goal: Int
     var color: Color
     var width: CGFloat = 20
-    var progress: Double
+    var progress: Int
     
     var body: some View {
         ZStack {

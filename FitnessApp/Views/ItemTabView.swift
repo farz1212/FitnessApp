@@ -25,6 +25,7 @@ struct ItemTabView: View {
                 }
             
         }
+        .tabViewStyle(.sidebarAdaptable)
         .tint(.green)
         
     }
